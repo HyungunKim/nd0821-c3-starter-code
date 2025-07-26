@@ -2,38 +2,39 @@ import pickle
 import pandas as pd
 import numpy as np
 import os
-import sys
-
-# Add the parent directory to the path so we can import the ml modules
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from starter.ml.model import inference
 from starter.ml.data import process_data
 
-def run_local_inference(custom_data_df):
+def run_local_inference(custom_data_df, model_path=None, encoder_path=None, lb_path=None):
     """
     Performs local inference on custom data using the trained model and artifacts.
 
     Args:
         custom_data_df (pd.DataFrame): DataFrame containing the custom data for inference.
-                                       Must have the same columns as the training data (excluding 'salary').
+        model_path (str, optional): Path to the model file. Defaults to "model/model.pkl".
+        encoder_path (str, optional): Path to the encoder file. Defaults to "model/encoder.pkl".
+        lb_path (str, optional): Path to the label binarizer file. Defaults to "model/lb.pkl".
 
     Returns:
         np.array: Predicted labels.
     """
-    model_path = "starter/model/model.pkl"
-    encoder_path = "starter/model/encoder.pkl"
-    lb_path = "starter/model/lb.pkl"
+    # Set default paths if not provided
+    if model_path is None:
+        model_path = "model/model.pkl"
+    if encoder_path is None:
+        encoder_path = "model/encoder.pkl"
+    if lb_path is None:
+        lb_path = "model/lb.pkl"
 
     # Adjust paths for script execution context if necessary
-    # Assuming this script is run from the 'starter' directory or its parent
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.dirname(base_dir) # Go up one level from 'starter'
+    project_root = os.path.dirname(base_dir)
 
-    model_full_path = os.path.join(project_root, model_path)
-    encoder_full_path = os.path.join(project_root, encoder_path)
-    lb_full_path = os.path.join(project_root, lb_path)
-
+    model_full_path = os.path.join(project_root, model_path) if not os.path.isabs(model_path) else model_path
+    encoder_full_path = os.path.join(project_root, encoder_path) if not os.path.isabs(encoder_path) else encoder_path
+    lb_full_path = os.path.join(project_root, lb_path) if not os.path.isabs(lb_path) else lb_path
+    
     if not os.path.exists(model_full_path):
         print(f"Error: Model file not found at {model_full_path}")
         return None
