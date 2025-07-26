@@ -11,10 +11,17 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-
+import sys
+# sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+print(os.path.dirname(__file__))
+sys.path.append(os.path.dirname(__file__))
 # Import functions from the ML module
-from starter.ml.data import process_data
-from starter.ml.model import inference
+try:
+    from starter.starter.ml.data import process_data
+    from starter.starter.ml.model import inference
+except ImportError:
+    from starter.ml.data import process_data
+    from starter.ml.model import inference
 
 # Create FastAPI app
 app = FastAPI(
