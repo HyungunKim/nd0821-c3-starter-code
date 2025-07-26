@@ -13,12 +13,11 @@ pytest>=6.2.0
 flake8>=3.9.0
 
 # Web Framework
-flask>=2.0.0
-
-# Database
-sqlalchemy>=1.4.0
-alembic>=1.7.0
+fastapi==0.63.0
+uvicorn
+gunicorn
 
 # Other Utilities
 requests>=2.26.0
 PyYAML>=5.4.0
+httpx

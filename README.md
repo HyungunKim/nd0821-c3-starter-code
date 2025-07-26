@@ -1,43 +1,149 @@
-Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
+# Census Income Prediction Project - Implementation Details
 
-# Environment Set up
-* Download and install conda if you don’t have it already.
-    * Use the supplied requirements file to create a new environment, or
-    * conda create -n [envname] "python=3.8" scikit-learn pandas numpy pytest jupyter jupyterlab fastapi uvicorn -c conda-forge
-    * Install git either through conda (“conda install git”) or through your CLI, e.g. sudo apt-get git.
+This document provides details about the implementation of the Census Income Prediction project.
 
-## Repositories
-* Create a directory for the project and initialize git.
-    * As you work on the code, continually commit changes. Trained models you want to use in production must be committed to GitHub.
-* Connect your local git repo to GitHub.
-* Setup GitHub Actions on your repo. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
-    * Make sure you set up the GitHub Action to have the same version of Python as you used in development.
+## Project Structure
 
-# Data
-* Download census.csv and commit it to dvc.
-* This data is messy, try to open it in pandas and see what you get.
-* To clean it, use your favorite text editor to remove all spaces.
+```
+starter/
+├── data/                  # Data directory
+│   └── census.csv         # Census dataset
+├── model/                 # Model directory (created during training)
+│   ├── model.pkl          # Trained model
+│   ├── encoder.pkl        # One-hot encoder
+│   └── lb.pkl             # Label binarizer
+├── metrics/               # Metrics directory (created during training)
+│   └── slice_metrics.csv  # Performance metrics on data slices
+├── ml/                    # Machine learning modules
+│   ├── data.py            # Data processing functions
+│   └── model.py           # Model training and inference functions
+├── tests/                 # Test directory
+│   ├── test_data.py       # Tests for data processing
+│   ├── test_model.py      # Tests for model functions
+│   └── test_api.py        # Tests for API endpoints
+├── main.py                # FastAPI application
+├── train_model.py         # Script to train and save the model
+├── request_live_api.py    # Script to test the live API
+└── model_card.md          # Model card documentation
+```
 
-# Model
-* Using the starter code, write a machine learning model that trains on the clean data and saves the model. Complete any function that has been started.
-* Write unit tests for at least 3 functions in the model code.
-* Write a function that outputs the performance of the model on slices of the data.
-    * Suggestion: for simplicity, the function can just output the performance on slices of just the categorical features.
-* Write a model card using the provided template.
+## Implementation Details
 
-# API Creation
-*  Create a RESTful API using FastAPI this must implement:
-    * GET on the root giving a welcome message.
-    * POST that does model inference.
-    * Type hinting must be used.
-    * Use a Pydantic model to ingest the body from POST. This model should contain an example.
-   	 * Hint: the data has names with hyphens and Python does not allow those as variable names. Do not modify the column names in the csv and instead use the functionality of FastAPI/Pydantic/etc to deal with this.
-* Write 3 unit tests to test the API (one for the GET and two for POST, one that tests each prediction).
+### Data Processing
 
-# API Deployment
-* Create a free Heroku account (for the next steps you can either use the web GUI or download the Heroku CLI).
-* Create a new app and have it deployed from your GitHub repository.
-    * Enable automatic deployments that only deploy if your continuous integration passes.
-    * Hint: think about how paths will differ in your local environment vs. on Heroku.
-    * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
-* Write a script that uses the requests module to do one POST on your live API.
+The data processing functionality is implemented in `ml/data.py`. The main function is `process_data`, which:
+- Separates features and labels
+- Handles categorical features using OneHotEncoder
+- Processes the label using LabelBinarizer
+- Combines continuous and categorical features
+
+### Model Training and Evaluation
+
+The model training and evaluation functionality is implemented in `ml/model.py`. The main functions are:
+- `train_model`: Trains a RandomForestClassifier on the provided data
+- `inference`: Makes predictions using the trained model
+- `compute_model_metrics`: Calculates precision, recall, and F1 score
+- `compute_model_metrics_on_slices`: Evaluates model performance on slices of the data
+
+The training pipeline is implemented in `train_model.py`, which:
+1. Loads and cleans the census data
+2. Splits it into train and test sets
+3. Processes the data using the process_data function
+4. Trains a model using the train_model function
+5. Evaluates the model on the test set
+6. Computes and saves metrics on slices of the data
+7. Saves the model, encoder, and label binarizer for later use
+
+### API Implementation
+
+The API is implemented in `main.py` using FastAPI. It provides two endpoints:
+- GET /: Returns a welcome message
+- POST /predict: Takes census data as input and returns a prediction (>50K or <=50K) along with a probability
+
+The API uses Pydantic models for request validation, with type hinting and examples as required. It handles hyphenated column names using aliases in the Pydantic model.
+
+### Testing
+
+Tests are implemented in the `tests` directory:
+- `test_data.py`: Tests for the data processing functionality
+- `test_model.py`: Tests for the model training and evaluation functionality
+- `test_api.py`: Tests for the API endpoints
+
+The tests cover all the required functionality and ensure that the code works as expected.
+
+## Running the Project
+
+### Training the Model
+
+To train the model, run:
+```
+python train_model.py
+```
+
+### Running the API Locally
+
+To run the API locally:
+```
+uvicorn main:app --reload
+```
+
+The API will be available at http://localhost:8000. You can access the interactive documentation at http://localhost:8000/docs.
+![img.png](api_docs.png)
+
+### Testing
+
+To run all tests:
+```bash
+pytest tests/
+```
+
+To run specific test suites:
+- For data processing tests:
+  ```bash
+  pytest tests/test_data.py
+  ```
+- For model functions tests:
+  ```bash
+  pytest tests/test_model.py
+  ```
+- For API endpoint tests:
+  ```bash
+  pytest tests/test_api.py
+  ```
+- For local inference and consistency tests:
+  ```bash
+  pytest tests/test_inference.py
+  ```
+
+To test the live API (after deployment):
+```bash
+python request_live_api.py
+```
+Also for the sanity check
+```bash
+python request_live_api.py
+> request_live_api.py
+```
+## Model Performance
+
+The model achieves the following performance on the test set:
+- Precision: ~0.79
+- Recall: ~0.58
+- FBeta: ~0.67
+
+Performance varies across different demographic slices. Detailed slice metrics are saved in the metrics directory.
+
+## Local Inference with Custom Data
+
+To perform inference on custom data locally (without using the API), you can use the `inference.py` script. This script loads the trained model, encoder, and label binarizer, processes your custom data, and then performs inference.
+
+To run local inference with example data, execute the script:
+```bash
+python inference.py
+```
+
+You can modify the `example_data` DataFrame within `inference.py` to test with your own custom data. Ensure your custom data has the same columns as the training data (excluding the 'salary' column).
+
+## Model Card
+
+See [model_card.md](model_card.md) for detailed information about the model, including its intended use, training data, performance metrics, ethical considerations, and limitations.
