@@ -50,18 +50,31 @@ def process_data(
     else:
         y = np.array([])
 
+    # If 'salary' is in the columns but not specified as the label, we should drop it
+    # This handles the case where label=None but 'salary' is still in the dataframe
+    if 'salary' in X.columns and (label is None or label != 'salary'):
+        X = X.drop(['salary'], axis=1)
+
     X_categorical = X[categorical_features].values
-    X_continuous = X.drop(*[categorical_features], axis=1)
+    X_continuous = X.drop(categorical_features, axis=1)
 
     if training is True:
-        encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
+        encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
         lb = LabelBinarizer()
         X_categorical = encoder.fit_transform(X_categorical)
-        y = lb.fit_transform(y.values).ravel()
+        # Check if y is already a numpy array
+        y_values = y.values if hasattr(y, 'values') else y
+        # Only fit the LabelBinarizer if y is not empty
+        if len(y_values) > 0:
+            y = lb.fit_transform(y_values).ravel()
     else:
         X_categorical = encoder.transform(X_categorical)
         try:
-            y = lb.transform(y.values).ravel()
+            # Check if y is already a numpy array
+            y_values = y.values if hasattr(y, 'values') else y
+            # Only transform y if it's not empty
+            if len(y_values) > 0:
+                y = lb.transform(y_values).ravel()
         # Catch the case where y is None because we're doing inference.
         except AttributeError:
             pass
