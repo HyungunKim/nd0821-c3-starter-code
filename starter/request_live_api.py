@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 # API endpoint URL
 # Replace with your actual Heroku app URL when deployed
 API_URL = "http://localhost:8000"
-
+REMOTE_API_URL = "https://nd0821-c3-cicd-ml-api.onrender.com"
 def test_api_get():
     """
     Test the GET endpoint of the API.
@@ -122,4 +122,10 @@ def main():
         logger.error("Some API tests failed")
 
 if __name__ == "__main__":
+    is_remote = input("Are you running this script on a remote server? (y/n): ") or 'y'
+    if is_remote == "y":
+        API_URL = REMOTE_API_URL
+    logger.info(
+        f"Running the API test script with API URL: {API_URL}"
+    )
     main()

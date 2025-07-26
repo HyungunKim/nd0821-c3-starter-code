@@ -150,6 +150,18 @@ See [model_card.md](starter/model_card.md) for detailed information about the mo
 
 ## Deployment
 Deployment is setup using Render service.  
-The service is live at https://nd0821-c3-cicd-ml-api.onrender.com/   
+The service is live at https://nd0821-c3-cicd-ml-api.onrender.com/  
+Test the remote api using `request_live_api.py`
+```bash
+python request_live_api.py
+ Are you running this script on a remote server? (y/n): y
+```
+The result would look like this  
+![img.png](live_post.png)
 Auto deployment
 ![img.png](continuous_deployment.png)
+
+![img.png](continuous_deployment_in_work.png)
+
+The api service is publicly up and running
+![img_1.png](live_get.png)
