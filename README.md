@@ -146,4 +146,4 @@ You can modify the `example_data` DataFrame within `inference.py` to test with y
 
 ## Model Card
 
-See [model_card.md](model_card.md) for detailed information about the model, including its intended use, training data, performance metrics, ethical considerations, and limitations.
+See [model_card.md](starter/model_card.md) for detailed information about the model, including its intended use, training data, performance metrics, ethical considerations, and limitations.
