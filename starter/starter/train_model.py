@@ -90,31 +90,7 @@ def main():
     precision, recall, fbeta = compute_model_metrics(y_test, preds)
     logger.info(f"Test metrics - Precision: {precision:.4f}, Recall: {recall:.4f}, F1: {fbeta:.4f}")
 
-    # Compute metrics on slices
-    logger.info("Computing metrics on slices...")
-    # We need to convert X_test back to a DataFrame with original column names for slice metrics
-    # First, get the original feature names
-    feature_names = []
-    # Add names for continuous features
-    continuous_features = [col for col in train.columns if col not in cat_features and col != "salary"]
-    feature_names.extend(continuous_features)
-
-    # Add names for one-hot encoded features
-    for feature in cat_features:
-        unique_values = train[feature].unique()
-        for value in unique_values:
-            feature_names.append(f"{feature}_{value}")
-
-    # Create a DataFrame with the processed test data
-    X_test_df = pd.DataFrame(X_test)
-
-    # Compute slice metrics
-    slice_metrics = compute_model_metrics_on_slices(model, X_test, y_test, cat_features)
-
-    # Save slice metrics to file
-    slice_metrics_path = os.path.join("..", "metrics", "slice_metrics.csv")
-    slice_metrics.to_csv(slice_metrics_path, index=False)
-    logger.info(f"Slice metrics saved to {slice_metrics_path}")
+    
 
     # Save model, encoder, and label binarizer
     logger.info("Saving model, encoder, and label binarizer...")
@@ -204,7 +180,7 @@ def evaluate_saved_model_on_full_data(data_path, model_path, encoder_path, lb_pa
 
     # Compute metrics on slices for full data
     logger.info("Computing slice metrics on full dataset...")
-    slice_metrics_full_df = compute_model_metrics_on_slices(model, X_full, y_full, cat_features)
+    slice_metrics_full_df = compute_model_metrics_on_slices(model, data, y_full, cat_features, encoder, lb)
 
     # Save full data slice metrics to file
     slice_metrics_full_df.to_csv(metrics_output_path, index=False)
@@ -213,15 +189,48 @@ def evaluate_saved_model_on_full_data(data_path, model_path, encoder_path, lb_pa
 
 
 if __name__ == "__main__":
+    # Run the main training pipeline
     main()
 
-    # Define paths for full data evaluation
+    # Define paths for evaluation
     current_dir = os.path.dirname(os.path.abspath(__file__))
     full_data_file = os.path.join(current_dir, "..", "data", "census.csv")
     model_file = os.path.join(current_dir, "..", "model", "model.pkl")
     encoder_file = os.path.join(current_dir, "..", "model", "encoder.pkl")
     lb_file = os.path.join(current_dir, "..", "model", "lb.pkl")
-    full_metrics_output_file = os.path.join(current_dir, "..", "metrics", "full_data_metrics.csv")
 
-    # Run evaluation on full dataset
+    # --- Evaluate on Full Dataset ---
+    full_metrics_output_file = os.path.join(current_dir, "..", "metrics", "full_data_metrics.csv")
+    logger.info("\n--- Running evaluation on full dataset ---")
     evaluate_saved_model_on_full_data(full_data_file, model_file, encoder_file, lb_file, full_metrics_output_file)
+
+    # --- Evaluate on Test Dataset ---
+    logger.info("\n--- Running evaluation on test dataset ---")
+    try:
+        # Load full data to split into test set
+        data = pd.read_csv(full_data_file)
+        data.columns = data.columns.str.strip()
+        for col in data.columns:
+            if data[col].dtype == 'object':
+                data[col] = data[col].str.strip()
+
+        # Split data to get the test set
+        _, test_df = train_test_split(data, test_size=0.20, random_state=42)
+
+        # Save test_df to a temporary file
+        temp_test_data_file = os.path.join(current_dir, "..", "data", "temp_test_data.csv")
+        test_df.to_csv(temp_test_data_file, index=False)
+        logger.info(f"Temporary test data saved to {temp_test_data_file}")
+
+        # Define path for test data metrics
+        test_metrics_output_file = os.path.join(current_dir, "..", "metrics", "test_data_metrics.csv")
+
+        # Evaluate the model on the test dataset using the temporary file
+        evaluate_saved_model_on_full_data(temp_test_data_file, model_file, encoder_file, lb_file, test_metrics_output_file)
+
+        # Clean up the temporary file
+        os.remove(temp_test_data_file)
+        logger.info(f"Removed temporary test data file: {temp_test_data_file}")
+
+    except Exception as e:
+        logger.error(f"Error during test dataset evaluation: {e}")
