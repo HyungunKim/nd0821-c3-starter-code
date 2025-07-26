@@ -1,0 +1,40 @@
+relationship Value Counts:
+relationship
+Husband           13193
+Not-in-family      8305
+Own-child          5068
+Unmarried          3446
+Wife               1568
+Other-relative      981
+Name: count, dtype: int64
+
+relationship Value Counts (Percentage):
+relationship
+Husband           40.517797
+Not-in-family     25.505973
+Own-child         15.564633
+Unmarried         10.583213
+Wife               4.815577
+Other-relative     3.012807
+Name: proportion, dtype: float64
+
+relationship vs Salary (Counts):
+salary          <=50K  >50K
+relationship               
+Husband          7275  5918
+Not-in-family    7449   856
+Other-relative    944    37
+Own-child        5001    67
+Unmarried        3228   218
+Wife              823   745
+
+relationship vs Salary (Row Percentages):
+salary              <=50K       >50K
+relationship                        
+Husband         55.142879  44.857121
+Not-in-family   89.692956  10.307044
+Other-relative  96.228338   3.771662
+Own-child       98.677979   1.322021
+Unmarried       93.673825   6.326175
+Wife            52.487245  47.512755
+

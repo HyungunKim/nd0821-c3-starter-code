@@ -1,0 +1,36 @@
+race Value Counts:
+race
+White                 27816
+Black                  3124
+Asian-Pac-Islander     1039
+Amer-Indian-Eskimo      311
+Other                   271
+Name: count, dtype: int64
+
+race Value Counts (Percentage):
+race
+White                 85.427352
+Black                  9.594300
+Asian-Pac-Islander     3.190934
+Amer-Indian-Eskimo     0.955130
+Other                  0.832284
+Name: proportion, dtype: float64
+
+race vs Salary (Counts):
+salary              <=50K  >50K
+race                           
+Amer-Indian-Eskimo    275    36
+Asian-Pac-Islander    763   276
+Black                2737   387
+Other                 246    25
+White               20699  7117
+
+race vs Salary (Row Percentages):
+salary                  <=50K       >50K
+race                                    
+Amer-Indian-Eskimo  88.424437  11.575563
+Asian-Pac-Islander  73.435996  26.564004
+Black               87.612036  12.387964
+Other               90.774908   9.225092
+White               74.414006  25.585994
+

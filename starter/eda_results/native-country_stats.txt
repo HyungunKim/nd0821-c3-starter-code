@@ -1,0 +1,184 @@
+native-country Value Counts:
+native-country
+United-States                 29170
+Mexico                          643
+?                               583
+Philippines                     198
+Germany                         137
+Canada                          121
+Puerto-Rico                     114
+El-Salvador                     106
+India                           100
+Cuba                             95
+England                          90
+Jamaica                          81
+South                            80
+China                            75
+Italy                            73
+Dominican-Republic               70
+Vietnam                          67
+Guatemala                        64
+Japan                            62
+Poland                           60
+Columbia                         59
+Taiwan                           51
+Haiti                            44
+Iran                             43
+Portugal                         37
+Nicaragua                        34
+Peru                             31
+France                           29
+Greece                           29
+Ecuador                          28
+Ireland                          24
+Hong                             20
+Cambodia                         19
+Trinadad&Tobago                  19
+Laos                             18
+Thailand                         18
+Yugoslavia                       16
+Outlying-US(Guam-USVI-etc)       14
+Honduras                         13
+Hungary                          13
+Scotland                         12
+Holand-Netherlands                1
+Name: count, dtype: int64
+
+native-country Value Counts (Percentage):
+native-country
+United-States                 89.585701
+Mexico                         1.974755
+?                              1.790486
+Philippines                    0.608089
+Germany                        0.420749
+Canada                         0.371610
+Puerto-Rico                    0.350112
+El-Salvador                    0.325543
+India                          0.307116
+Cuba                           0.291760
+England                        0.276404
+Jamaica                        0.248764
+South                          0.245693
+China                          0.230337
+Italy                          0.224195
+Dominican-Republic             0.214981
+Vietnam                        0.205768
+Guatemala                      0.196554
+Japan                          0.190412
+Poland                         0.184270
+Columbia                       0.181198
+Taiwan                         0.156629
+Haiti                          0.135131
+Iran                           0.132060
+Portugal                       0.113633
+Nicaragua                      0.104419
+Peru                           0.095206
+France                         0.089064
+Greece                         0.089064
+Ecuador                        0.085992
+Ireland                        0.073708
+Hong                           0.061423
+Cambodia                       0.058352
+Trinadad&Tobago                0.058352
+Laos                           0.055281
+Thailand                       0.055281
+Yugoslavia                     0.049139
+Outlying-US(Guam-USVI-etc)     0.042996
+Honduras                       0.039925
+Hungary                        0.039925
+Scotland                       0.036854
+Holand-Netherlands             0.003071
+Name: proportion, dtype: float64
+
+native-country vs Salary (Counts):
+salary                      <=50K  >50K
+native-country                         
+?                             437   146
+Cambodia                       12     7
+Canada                         82    39
+China                          55    20
+Columbia                       57     2
+Cuba                           70    25
+Dominican-Republic             68     2
+Ecuador                        24     4
+El-Salvador                    97     9
+England                        60    30
+France                         17    12
+Germany                        93    44
+Greece                         21     8
+Guatemala                      61     3
+Haiti                          40     4
+Holand-Netherlands              1     0
+Honduras                       12     1
+Hong                           14     6
+Hungary                        10     3
+India                          60    40
+Iran                           25    18
+Ireland                        19     5
+Italy                          48    25
+Jamaica                        71    10
+Japan                          38    24
+Laos                           16     2
+Mexico                        610    33
+Nicaragua                      32     2
+Outlying-US(Guam-USVI-etc)     14     0
+Peru                           29     2
+Philippines                   137    61
+Poland                         48    12
+Portugal                       33     4
+Puerto-Rico                   102    12
+Scotland                        9     3
+South                          64    16
+Taiwan                         31    20
+Thailand                       15     3
+Trinadad&Tobago                17     2
+United-States               21999  7171
+Vietnam                        62     5
+Yugoslavia                     10     6
+
+native-country vs Salary (Row Percentages):
+salary                           <=50K       >50K
+native-country                                   
+?                            74.957118  25.042882
+Cambodia                     63.157895  36.842105
+Canada                       67.768595  32.231405
+China                        73.333333  26.666667
+Columbia                     96.610169   3.389831
+Cuba                         73.684211  26.315789
+Dominican-Republic           97.142857   2.857143
+Ecuador                      85.714286  14.285714
+El-Salvador                  91.509434   8.490566
+England                      66.666667  33.333333
+France                       58.620690  41.379310
+Germany                      67.883212  32.116788
+Greece                       72.413793  27.586207
+Guatemala                    95.312500   4.687500
+Haiti                        90.909091   9.090909
+Holand-Netherlands          100.000000   0.000000
+Honduras                     92.307692   7.692308
+Hong                         70.000000  30.000000
+Hungary                      76.923077  23.076923
+India                        60.000000  40.000000
+Iran                         58.139535  41.860465
+Ireland                      79.166667  20.833333
+Italy                        65.753425  34.246575
+Jamaica                      87.654321  12.345679
+Japan                        61.290323  38.709677
+Laos                         88.888889  11.111111
+Mexico                       94.867807   5.132193
+Nicaragua                    94.117647   5.882353
+Outlying-US(Guam-USVI-etc)  100.000000   0.000000
+Peru                         93.548387   6.451613
+Philippines                  69.191919  30.808081
+Poland                       80.000000  20.000000
+Portugal                     89.189189  10.810811
+Puerto-Rico                  89.473684  10.526316
+Scotland                     75.000000  25.000000
+South                        80.000000  20.000000
+Taiwan                       60.784314  39.215686
+Thailand                     83.333333  16.666667
+Trinadad&Tobago              89.473684  10.526316
+United-States                75.416524  24.583476
+Vietnam                      92.537313   7.462687
+Yugoslavia                   62.500000  37.500000
+

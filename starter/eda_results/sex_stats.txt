@@ -1,0 +1,24 @@
+sex Value Counts:
+sex
+Male      21790
+Female    10771
+Name: count, dtype: int64
+
+sex Value Counts (Percentage):
+sex
+Male      66.920549
+Female    33.079451
+Name: proportion, dtype: float64
+
+sex vs Salary (Counts):
+salary  <=50K  >50K
+sex                
+Female   9592  1179
+Male    15128  6662
+
+sex vs Salary (Row Percentages):
+salary      <=50K       >50K
+sex                         
+Female  89.053941  10.946059
+Male    69.426342  30.573658
+

@@ -1,0 +1,8 @@
+Salary Distribution:
+salary
+<=50K    24720
+>50K      7841
+Name: count, dtype: int64
+
+Percentage >50K: 24.08%
+Percentage <=50K: 75.92%

@@ -1,0 +1,76 @@
+occupation Value Counts:
+occupation
+Prof-specialty       4140
+Craft-repair         4099
+Exec-managerial      4066
+Adm-clerical         3770
+Sales                3650
+Other-service        3295
+Machine-op-inspct    2002
+?                    1843
+Transport-moving     1597
+Handlers-cleaners    1370
+Farming-fishing       994
+Tech-support          928
+Protective-serv       649
+Priv-house-serv       149
+Armed-Forces            9
+Name: count, dtype: int64
+
+occupation Value Counts (Percentage):
+occupation
+Prof-specialty       12.714597
+Craft-repair         12.588680
+Exec-managerial      12.487331
+Adm-clerical         11.578268
+Sales                11.209729
+Other-service        10.119468
+Machine-op-inspct     6.148460
+?                     5.660146
+Transport-moving      4.904641
+Handlers-cleaners     4.207487
+Farming-fishing       3.052732
+Tech-support          2.850035
+Protective-serv       1.993182
+Priv-house-serv       0.457603
+Armed-Forces          0.027640
+Name: proportion, dtype: float64
+
+occupation vs Salary (Counts):
+salary             <=50K  >50K
+occupation                    
+?                   1652   191
+Adm-clerical        3263   507
+Armed-Forces           8     1
+Craft-repair        3170   929
+Exec-managerial     2098  1968
+Farming-fishing      879   115
+Handlers-cleaners   1284    86
+Machine-op-inspct   1752   250
+Other-service       3158   137
+Priv-house-serv      148     1
+Prof-specialty      2281  1859
+Protective-serv      438   211
+Sales               2667   983
+Tech-support         645   283
+Transport-moving    1277   320
+
+occupation vs Salary (Row Percentages):
+salary                 <=50K       >50K
+occupation                             
+?                  89.636462  10.363538
+Adm-clerical       86.551724  13.448276
+Armed-Forces       88.888889  11.111111
+Craft-repair       77.335936  22.664064
+Exec-managerial    51.598623  48.401377
+Farming-fishing    88.430584  11.569416
+Handlers-cleaners  93.722628   6.277372
+Machine-op-inspct  87.512488  12.487512
+Other-service      95.842185   4.157815
+Priv-house-serv    99.328859   0.671141
+Prof-specialty     55.096618  44.903382
+Protective-serv    67.488444  32.511556
+Sales              73.068493  26.931507
+Tech-support       69.504310  30.495690
+Transport-moving   79.962430  20.037570
+

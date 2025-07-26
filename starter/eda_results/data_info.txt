@@ -1,0 +1,54 @@
+Dataset Shape: (32561, 15)
+
+Data Types:
+age                int64
+workclass         object
+fnlgt              int64
+education         object
+education-num      int64
+marital-status    object
+occupation        object
+relationship      object
+race              object
+sex               object
+capital-gain       int64
+capital-loss       int64
+hours-per-week     int64
+native-country    object
+salary            object
+dtype: object
+
+Summary Statistics for Numerical Features:
+                age         fnlgt  ...  capital-loss  hours-per-week
+count  32561.000000  3.256100e+04  ...  32561.000000    32561.000000
+mean      38.581647  1.897784e+05  ...     87.303830       40.437456
+std       13.640433  1.055500e+05  ...    402.960219       12.347429
+min       17.000000  1.228500e+04  ...      0.000000        1.000000
+25%       28.000000  1.178270e+05  ...      0.000000       40.000000
+50%       37.000000  1.783560e+05  ...      0.000000       40.000000
+75%       48.000000  2.370510e+05  ...      0.000000       45.000000
+max       90.000000  1.484705e+06  ...   4356.000000       99.000000
+
+[8 rows x 6 columns]
+
+Missing Values:
+age               0
+workclass         0
+fnlgt             0
+education         0
+education-num     0
+marital-status    0
+occupation        0
+relationship      0
+race              0
+sex               0
+capital-gain      0
+capital-loss      0
+hours-per-week    0
+native-country    0
+salary            0
+dtype: int64
+
+Column workclass has 1836 '?' values
+Column occupation has 1843 '?' values
+Column native-country has 583 '?' values

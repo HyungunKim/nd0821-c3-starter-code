@@ -1,0 +1,44 @@
+marital-status Value Counts:
+marital-status
+Married-civ-spouse       14976
+Never-married            10683
+Divorced                  4443
+Separated                 1025
+Widowed                    993
+Married-spouse-absent      418
+Married-AF-spouse           23
+Name: count, dtype: int64
+
+marital-status Value Counts (Percentage):
+marital-status
+Married-civ-spouse       45.993673
+Never-married            32.809189
+Divorced                 13.645158
+Separated                 3.147938
+Widowed                   3.049661
+Married-spouse-absent     1.283744
+Married-AF-spouse         0.070637
+Name: proportion, dtype: float64
+
+marital-status vs Salary (Counts):
+salary                 <=50K  >50K
+marital-status                    
+Divorced                3980   463
+Married-AF-spouse         13    10
+Married-civ-spouse      8284  6692
+Married-spouse-absent    384    34
+Never-married          10192   491
+Separated                959    66
+Widowed                  908    85
+
+marital-status vs Salary (Row Percentages):
+salary                     <=50K       >50K
+marital-status                             
+Divorced               89.579113  10.420887
+Married-AF-spouse      56.521739  43.478261
+Married-civ-spouse     55.315171  44.684829
+Married-spouse-absent  91.866029   8.133971
+Never-married          95.403913   4.596087
+Separated              93.560976   6.439024
+Widowed                91.440081   8.559919
+

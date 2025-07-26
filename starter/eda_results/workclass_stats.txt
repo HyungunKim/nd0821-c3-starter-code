@@ -1,0 +1,52 @@
+workclass Value Counts:
+workclass
+Private             22696
+Self-emp-not-inc     2541
+Local-gov            2093
+?                    1836
+State-gov            1298
+Self-emp-inc         1116
+Federal-gov           960
+Without-pay            14
+Never-worked            7
+Name: count, dtype: int64
+
+workclass Value Counts (Percentage):
+workclass
+Private             69.703019
+Self-emp-not-inc     7.803814
+Local-gov            6.427935
+?                    5.638647
+State-gov            3.986364
+Self-emp-inc         3.427413
+Federal-gov          2.948312
+Without-pay          0.042996
+Never-worked         0.021498
+Name: proportion, dtype: float64
+
+workclass vs Salary (Counts):
+salary            <=50K  >50K
+workclass                    
+?                  1645   191
+Federal-gov         589   371
+Local-gov          1476   617
+Never-worked          7     0
+Private           17733  4963
+Self-emp-inc        494   622
+Self-emp-not-inc   1817   724
+State-gov           945   353
+Without-pay          14     0
+
+workclass vs Salary (Row Percentages):
+salary                 <=50K       >50K
+workclass                              
+?                  89.596950  10.403050
+Federal-gov        61.354167  38.645833
+Local-gov          70.520784  29.479216
+Never-worked      100.000000   0.000000
+Private            78.132711  21.867289
+Self-emp-inc       44.265233  55.734767
+Self-emp-not-inc   71.507281  28.492719
+State-gov          72.804314  27.195686
+Without-pay       100.000000   0.000000
+

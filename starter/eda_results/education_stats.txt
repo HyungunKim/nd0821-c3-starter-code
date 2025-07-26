@@ -1,0 +1,80 @@
+education Value Counts:
+education
+HS-grad         10501
+Some-college     7291
+Bachelors        5355
+Masters          1723
+Assoc-voc        1382
+11th             1175
+Assoc-acdm       1067
+10th              933
+7th-8th           646
+Prof-school       576
+9th               514
+12th              433
+Doctorate         413
+5th-6th           333
+1st-4th           168
+Preschool          51
+Name: count, dtype: int64
+
+education Value Counts (Percentage):
+education
+HS-grad         32.250238
+Some-college    22.391818
+Bachelors       16.446055
+Masters          5.291607
+Assoc-voc        4.244341
+11th             3.608612
+Assoc-acdm       3.276926
+10th             2.865391
+7th-8th          1.983969
+Prof-school      1.768987
+9th              1.578576
+12th             1.329812
+Doctorate        1.268389
+5th-6th          1.022696
+1st-4th          0.515955
+Preschool        0.156629
+Name: proportion, dtype: float64
+
+education vs Salary (Counts):
+salary        <=50K  >50K
+education                
+10th            871    62
+11th           1115    60
+12th            400    33
+1st-4th         162     6
+5th-6th         317    16
+7th-8th         606    40
+9th             487    27
+Assoc-acdm      802   265
+Assoc-voc      1021   361
+Bachelors      3134  2221
+Doctorate       107   306
+HS-grad        8826  1675
+Masters         764   959
+Preschool        51     0
+Prof-school     153   423
+Some-college   5904  1387
+
+education vs Salary (Row Percentages):
+salary             <=50K       >50K
+education                          
+10th           93.354770   6.645230
+11th           94.893617   5.106383
+12th           92.378753   7.621247
+1st-4th        96.428571   3.571429
+5th-6th        95.195195   4.804805
+7th-8th        93.808050   6.191950
+9th            94.747082   5.252918
+Assoc-acdm     75.164011  24.835989
+Assoc-voc      73.878437  26.121563
+Bachelors      58.524743  41.475257
+Doctorate      25.907990  74.092010
+HS-grad        84.049138  15.950862
+Masters        44.341265  55.658735
+Preschool     100.000000   0.000000
+Prof-school    26.562500  73.437500
+Some-college   80.976546  19.023454
+
