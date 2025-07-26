@@ -111,10 +111,11 @@ def compute_model_metrics_on_slices(model, X, y, categorical_features, encoder, 
     from .data import process_data
 
     # Compute overall metrics on the full processed data
-    # First, process the full X using the provided encoder and lb
-    X_processed_overall, y_processed_overall, _, _ = process_data(
-        X.copy(), categorical_features=categorical_features, label="salary", training=False, encoder=encoder, lb=lb
+    # Process the full X using the provided encoder
+    X_processed_overall, _, _, _ = process_data(
+        X.copy(), categorical_features=categorical_features, label=None, training=False, encoder=encoder, lb=lb
     )
+    y_processed_overall = y # y is already binarized and corresponds to X
     preds_overall = inference(model, X_processed_overall)
     precision_overall, recall_overall, fbeta_overall = compute_model_metrics(y_processed_overall, preds_overall)
     slice_metrics.append({
