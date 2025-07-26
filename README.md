@@ -147,3 +147,9 @@ You can modify the `example_data` DataFrame within `inference.py` to test with y
 ## Model Card
 
 See [model_card.md](starter/model_card.md) for detailed information about the model, including its intended use, training data, performance metrics, ethical considerations, and limitations.
+
+## Deployment
+Deployment is setup using Render service.  
+The service is live at https://nd0821-c3-cicd-ml-api.onrender.com/   
+Auto deployment
+![img.png](continuous_deployment.png)
