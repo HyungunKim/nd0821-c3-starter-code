@@ -20,14 +20,17 @@ def main():
     """
     Main function to train and save the model.
     """
+    # Get the directory of the current script
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
     # Create directories for model and metrics if they don't exist
-    os.makedirs(os.path.join("..", "model"), exist_ok=True)
-    os.makedirs(os.path.join("..", "metrics"), exist_ok=True)
+    os.makedirs(os.path.join(current_dir, "..", "model"), exist_ok=True)
+    os.makedirs(os.path.join(current_dir, "..", "metrics"), exist_ok=True)
 
     # Load data
     logger.info("Loading data...")
     try:
-        data_path = os.path.join("..", "data", "census.csv")
+        data_path = os.path.join(current_dir, "..", "data", "census.csv")
         data = pd.read_csv(data_path)
 
         # Clean the data by stripping spaces from column names and string values
@@ -94,9 +97,9 @@ def main():
 
     # Save model, encoder, and label binarizer
     logger.info("Saving model, encoder, and label binarizer...")
-    model_path = os.path.join("..", "model", "model.pkl")
-    encoder_path = os.path.join("..", "model", "encoder.pkl")
-    lb_path = os.path.join("..", "model", "lb.pkl")
+    model_path = os.path.join(current_dir, "..", "model", "model.pkl")
+    encoder_path = os.path.join(current_dir, "..", "model", "encoder.pkl")
+    lb_path = os.path.join(current_dir, "..", "model", "lb.pkl")
 
     with open(model_path, 'wb') as f:
         pickle.dump(model, f)
