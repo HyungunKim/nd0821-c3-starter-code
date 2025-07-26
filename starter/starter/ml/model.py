@@ -80,7 +80,7 @@ def inference(model, X):
     return preds
 
 
-def compute_model_metrics_on_slices(model, X, y, categorical_features):
+def compute_model_metrics_on_slices(model, X, y, categorical_features, encoder, lb):
     """
     Computes model metrics on slices of the data for each categorical feature.
 
@@ -89,11 +89,15 @@ def compute_model_metrics_on_slices(model, X, y, categorical_features):
     model : RandomForestClassifier
         Trained machine learning model.
     X : pd.DataFrame
-        Data used for prediction.
+        Original data used for prediction (before one-hot encoding).
     y : np.array
         Known labels, binarized.
     categorical_features : list
         List of categorical feature names.
+    encoder : sklearn.preprocessing._encoders.OneHotEncoder
+        Trained sklearn OneHotEncoder.
+    lb : sklearn.preprocessing._label.LabelBinarizer
+        Trained sklearn LabelBinarizer.
 
     Returns
     -------
@@ -103,46 +107,62 @@ def compute_model_metrics_on_slices(model, X, y, categorical_features):
     logger.info("Computing metrics on slices...")
     slice_metrics = []
 
-    # Convert X to DataFrame if it's a numpy array
-    if isinstance(X, np.ndarray):
-        X_df = pd.DataFrame(X)
-    else:
-        X_df = X.copy()
+    # Import process_data here to avoid circular dependency if ml.data imports ml.model
+    from .data import process_data
 
-    # Make predictions
-    preds = inference(model, X)
-
-    # Compute overall metrics
-    precision, recall, fbeta = compute_model_metrics(y, preds)
+    # Compute overall metrics on the full processed data
+    # First, process the full X using the provided encoder and lb
+    X_processed_overall, y_processed_overall, _, _ = process_data(
+        X.copy(), categorical_features=categorical_features, label="salary", training=False, encoder=encoder, lb=lb
+    )
+    preds_overall = inference(model, X_processed_overall)
+    precision_overall, recall_overall, fbeta_overall = compute_model_metrics(y_processed_overall, preds_overall)
     slice_metrics.append({
         'feature': 'Overall',
         'slice': 'Overall',
-        'precision': precision,
-        'recall': recall,
-        'fbeta': fbeta,
-        'samples': len(y)
+        'precision': precision_overall,
+        'recall': recall_overall,
+        'fbeta': fbeta_overall,
+        'samples': len(y_processed_overall)
     })
+    logger.info(f"Overall metrics computed: Precision={precision_overall:.4f}, Recall={recall_overall:.4f}, Fbeta={fbeta_overall:.4f}")
 
     # Compute metrics for each categorical feature
+    logger.info(f"Categorical features to slice by: {categorical_features}")
     for feature in categorical_features:
-        if feature in X_df.columns:
-            # Get unique values for the feature
-            unique_values = X_df[feature].unique()
+        logger.info(f"Processing feature: {feature}")
+        # Ensure the feature exists in the original DataFrame
+        if feature in X.columns:
+            unique_values = X[feature].unique()
+            logger.info(f"Unique values for {feature}: {unique_values}")
 
             for value in unique_values:
-                # Get indices for this slice
-                indices = X_df[feature] == value
+                logger.info(f"  Processing slice: {feature}={value}")
+                # Filter the original DataFrame for the current slice
+                X_slice_original = X[X[feature] == value]
+                y_slice_original = y[X[feature] == value]
 
                 # Skip if there are no samples in this slice
-                if sum(indices) == 0:
+                if len(X_slice_original) == 0:
+                    logger.info(f"    Skipping empty slice: {feature}={value}")
                     continue
 
-                # Get predictions and true values for this slice
-                slice_preds = preds[indices]
-                slice_y = y[indices]
+                # Process the slice data using the trained encoder and lb
+                X_slice_processed, _, _, _ = process_data(
+                    X_slice_original.copy(), 
+                    categorical_features=categorical_features, 
+                    label=None, 
+                    training=False, 
+                    encoder=encoder, 
+                    lb=lb
+                )
+
+                # Make predictions on the processed slice
+                slice_preds = inference(model, X_slice_processed)
 
                 # Compute metrics for this slice
-                precision, recall, fbeta = compute_model_metrics(slice_y, slice_preds)
+                precision, recall, fbeta = compute_model_metrics(y_slice_original, slice_preds)
+                logger.info(f"    Metrics for {feature}={value}: Precision={precision:.4f}, Recall={recall:.4f}, Fbeta={fbeta:.4f}, Samples={len(y_slice_original)}")
 
                 # Add to results
                 slice_metrics.append({
@@ -151,7 +171,7 @@ def compute_model_metrics_on_slices(model, X, y, categorical_features):
                     'precision': precision,
                     'recall': recall,
                     'fbeta': fbeta,
-                    'samples': sum(indices)
+                    'samples': len(y_slice_original)
                 })
 
     # Convert to DataFrame
