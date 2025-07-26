@@ -3,7 +3,7 @@
 ## Model Details
 - **Model type**: Random Forest Classifier
 - **Version**: 1.0.0
-- **Training date**: 2023
+- **Training date**: 2025.07.27
 - **Parameters**:
   - n_estimators: 100
   - max_depth: 15
